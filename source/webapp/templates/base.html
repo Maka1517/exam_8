@@ -1,0 +1,38 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Products{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block links %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+       <div class="container">
+           <ul class="menu">
+               <li><a href="{% url 'webapp:index' %}">Index</a></li>
+               {% if perms.webapp.change_issue or issue.author == request.user %}
+               <li><a href="{% url 'webapp:product_create' %}">Add Product</a></li>
+               {% endif %}
+               {% if user.is_authenticated %}
+                    {% block menu_links %}{% endblock %}
+                    <li class="menu-right"><a href="{% url 'accounts:logout' %}" class="nav-link">Выход</a></li>
+                    <li class="menu-right">Привет,<a href="{% url 'accounts:detail' user.pk %}"> {{ user.username }}!</li>
+               {% else %}
+           <li class="menu-right"><a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}" class="nav-link">Вход</a></li>
+           <li class="menu-right"><a href="{% url 'accounts:create' %}?next={{ request.get_full_path }}" class="nav-link">Регистрация</a></li>
+
+       {% endif %}
+           </ul>
+       </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

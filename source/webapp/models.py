@@ -15,6 +15,7 @@ class Product(models.Model):
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='others', verbose_name='Категория')
     description = models.TextField(max_length=3000, null=True, blank=True, verbose_name='Описание')
     image = models.ImageField(null=True, blank=True, upload_to='uploads', verbose_name='Картинка')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
 
     def __str__(self):
         return "{}. {}".format(self.name, self.image)
