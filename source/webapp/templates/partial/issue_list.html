@@ -1,0 +1,32 @@
+{% if is_paginated %}
+    {% include 'partial/pagination.html' %}
+{% endif %}
+
+{% for product in products %}
+    <div class="box">
+        <h3><a href="{% url "webapp:product_view" issue.pk %}">{{ issue.summary }}</a></h3>
+        <p>
+            <label for="selected_products-{{ product.pk }}">Select:</label>
+            <input type="checkbox" name="selected_products"
+                   id="selected_products-{{ product.pk }}" value="{{ product.pk }}">
+        </p>
+        <p>Категория: ({{ product.category }} | {{ product.get_category_display }})</p>
+        <p>
+            <a href="{% url 'accounts:detail' product.author_id %}">{{ product.author }}</a>
+            | {{ product.created_at|date:"d.m.Y H:i:s" }}
+        </p>
+        <p>Added at: {{ product.created_at|date:"d.m.Y H:i:s" }}</p>
+        {% if perms.webapp.change_issue or issue.author == request.user %}
+            <p><a href="{% url 'webapp:product_update' product.pk %}">Update</a></p>
+        {% endif %}
+        {% if perms.webapp.delete_product or product.author == request.user %}
+            <p><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></p>
+        {% endif %}
+    </div>
+{% empty %}
+    <h2 class="text-center">Нет статей</h2>
+{% endfor %}
+
+{% if is_paginated %}
+     {% include 'partial/pagination.html' %}
+{% endif %}

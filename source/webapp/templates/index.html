@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Products{% endblock %}
+
+{% block content %}
+    <h1>Список товаров</h1>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+    {% for product in products %}
+        <h3><a href="{% url 'webapp:product_view' product.pk %}">{{ product.name }}</a></h3>
+        <img class="avatar" src="{{ product.image.url}}" width="50" height="50" alt="product picture">
+        <p>Category: ({{ product.category }})</p>
+        {% if perms.webapp.change_issue or issue.author == request.user %}
+        <p><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></p>
+        <p><a href="{% url 'webapp:product_update' product.pk %}">Update</a></p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

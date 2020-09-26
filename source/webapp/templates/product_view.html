@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}About product{% endblock %}
+
+
+
+{% block content %}
+    <div class="box">
+        <h1>{{ product.name }}</h1>
+        <img class="avatar" src="{{ product.image.url}}" width="100" height="100" alt="product picture">
+        <p class="pre">{{ product.description }}</p>
+        <p>Category: {{ product.category }} </p>
+        <p>Created at: {{ issue.created_at|date:"d.m.Y H:i:s" }}</p>
+{#        {% if perms.webapp.change_issue or issue.author == request.user %}#}
+{#        <p>By: {{ issue.author }}</p>#}
+{#        <p><a href="{% url 'webapp:issue_delete' issue.pk %}">Delete</a></p>#}
+{#        <p><a href="{% url 'webapp:issue_update' issue.pk %}">Update</a></p>#}
+{#        {% endif %}#}
+    </div>
+{% endblock %}
